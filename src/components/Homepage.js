@@ -8,7 +8,7 @@ import Messages from './Messages';
 import News from './News';
 import Weather from './Weather';
 import ScrollingText from './ScrollingText'
-import IFrameComponent from './IframeComponent';
+// import IFrameComponent from './IframeComponent';
 
 export default function Homepage() {
     const [index, setIndex] = useState(0);

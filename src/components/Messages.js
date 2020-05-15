@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components'
 
 import macron from '../data/pdp.png'
-import Photos from './Photos';
+// import Photos from './Photos';
 
 export default function Messages(props) {
   const numberOfNewMessages = 3;
