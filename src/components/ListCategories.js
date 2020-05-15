@@ -4,7 +4,7 @@ import styled from 'styled-components'
 //color: #FF969B;
 //color: #6EC8B9;
 export default function ListCategories(props) {
-    const categoriesNames = ["Photos", "Reminders", "Messages", "Sport", "Weather"];
+    const categoriesNames = ["News", "Weather", "Messages", "Reminders", "Photos"];
 
     return (
         <div>
@@ -27,14 +27,14 @@ const Container = styled.div`
 
   position: absolute;
   right:0;
-  top: 10%;
+  top: 5%;
   height : 80%;
   width : 20%;
 `;
 
 const Category = styled.button`
     height : 15%;
-    padding: 20px;
+    padding: 1vw 2vh 1vw 2vh;
     
     color: ${props => props.toCompare === props.page ? "#FF969B": "#6EC8B9"};
     

@@ -1,19 +1,61 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 
 import ListCategories from './ListCategories'
 import Photos from './Photos';
 import Reminders from './Reminders';
+import Messages from './Messages';
+import News from './News';
+import Weather from './Weather';
+import ScrollingText from './ScrollingText'
+import IFrameComponent from './IframeComponent';
 
 export default function Homepage() {
     const [index, setIndex] = useState(0);
-    let today = new Date();
+    const [indexNews, setIndexNews] = useState(0);
+    // let today = new Date();
+
+    const [today, setToday] = useState(new Date());
+
+    const [forecast, setForecast] = useState();
+    //42ac8838a5eb1a998b9ac69f79eb45c7 la mienne
+    //7b996dfcc08c6eb32d0b8fa2ee15669a pas la mienne
+
+    const [news, setNews] = useState();
 
     useEffect(() => {
-        const timer = setTimeout(() => 
+        async function fetchData() {
+            const res = await fetch("https://newsapi.org/v2/top-headlines?country=ie&apiKey=5451bf4e9300407691a4ce8fc60b4e08");
+            res
+                .json()
+                .then(res => setNews(res))
+            // .catch(err => setErrors(err));
+        }
+
+        fetchData();
+        console.log("appel a l'api news");
+    }, []);
+
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await fetch("https://api.openweathermap.org/data/2.5/onecall?lat=30.489772&lon=-99.771335&units=metric&APPID=7b996dfcc08c6eb32d0b8fa2ee15669a");
+            res
+                .json()
+                .then(res => setForecast(res.daily))
+            // .catch(err => setErrors(err));
+        }
+
+        fetchData();
+        console.log("appel a l'api");
+    }, []);
+
+
+    useEffect(() => {
+        const timer = setTimeout(() =>
             setIndex(index + 1)
-        , 1000);
-        if(index === 5) {
+            , 5000);
+        if (index === 5) {
             setIndex(0);
         }
         return () => {
@@ -21,59 +63,122 @@ export default function Homepage() {
         }
     }, [index])
 
+    useEffect(() => {
+        const timer = setTimeout(() =>
+            setIndexNews(indexNews + 3)
+            , 25000);
+
+        if (indexNews > 17) {
+            setIndexNews(0);
+        }
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [indexNews])
+
+    useEffect(() => {
+        const timer = setTimeout(() =>
+            setToday(new Date())
+            , 1000);
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [today])
+
+
+    //besoin d'ajouter un useEffect pour l'heure en haut a gauche
+
 
     function switchPage(index) {
         switch (index) {
             case 0:
-                return <Photos/>;
-                break;
+                return <News news={news}  index={indexNews}/>;
+                // return <IFrameComponent></IFrameComponent>
             case 1:
-                return <Reminders/>;
-                break;
+                return <Weather forecast={forecast}/>;
+            case 2:
+                return <Messages />;
+            case 3:
+                return <Reminders />;
+            case 4:
+                return <Photos />;
             default:
                 return null;
-                
-
         }
 
     }
 
     return (
         <div>
-            
+            {/* {console.log(news)} */}
             <HomePageButton>
                 InformaTV
             </HomePageButton>
             <HomePageButton2>
-                {today.toString().substring(0,16)}
+                {today.toString().substring(0, 16)}
             </HomePageButton2>
             <HomePageButton3>
                 {today.toString().substring(16, 25)}
             </HomePageButton3>
             <ContentAndBoucle>
                 <Content>
-                    {switchPage(index)}
-                    
+                    {switchPage(2)}
+
                 </Content>
                 <Boucle>
-                    <ListCategories index = {index}>
+                    <ListCategories index={index}>
                     </ListCategories>
                 </Boucle>
 
 
             </ContentAndBoucle>
-
             
-            {/* {switchPage(index)} */}
+            <Bottom>
+            <NewsText>News</NewsText>
+            <ScrollingBar>
+                <ScrollingText news={news}></ScrollingText>
+            </ScrollingBar>
+            </Bottom>
+
 
         </div>
     );
 }
 
+
+const Bottom = styled.div`
+    display: flex;
+    width: 100vw;
+    height:10vh;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    color: #6EC8B9;
+`
+
+const ScrollingBar = styled.div`
+    display: flex;
+    width: 90vw;
+    height:10vh;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    color: #6EC8B9;
+`
+const NewsText = styled.div`
+    height:10vh;
+    line-height: 10vh;
+    width: 20vw;
+    font-size: 5vh;
+    text-align: center;
+    background: #6EC8B9;
+    color: white;
+`
+
 const ContentAndBoucle = styled.div`
     display: flex;
     flex-direction: row;
-    height:100vh;
+    height:90vh;
 `
 
 const Content = styled.div`
@@ -89,7 +194,7 @@ const Boucle = styled.div`
 
 const HomePageButton = styled.button`
     position: absolute;
-    top: 3%;
+    top: 1%;
 
 
     background-color: #6EC8B9;
@@ -103,7 +208,7 @@ const HomePageButton = styled.button`
 
 const HomePageButton2 = styled.button`
     position: absolute;
-    top: 10%;
+    top: 7%;
 
 
     background-color: #6EC8B9;
@@ -116,7 +221,7 @@ const HomePageButton2 = styled.button`
 `;
 const HomePageButton3 = styled.button`
     position: absolute;
-    top: 17%;
+    top: 13%;
 
 
     background-color: #6EC8B9;
