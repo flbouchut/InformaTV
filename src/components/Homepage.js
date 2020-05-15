@@ -122,7 +122,7 @@ export default function Homepage() {
             </HomePageButton3>
             <ContentAndBoucle>
                 <Content>
-                    {switchPage(2)}
+                    {switchPage(index)}
 
                 </Content>
                 <Boucle>

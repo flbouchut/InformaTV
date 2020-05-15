@@ -36,7 +36,7 @@ function photos() {
 
     return (
         <div>
-          {console.log(newNotifications)}
+          {/* {console.log(newNotifications)} */}
           {newNotifications ?
           <Alert>You get 3 news messages</Alert>
           : null
