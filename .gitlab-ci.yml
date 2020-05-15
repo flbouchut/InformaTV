@@ -3,8 +3,7 @@ image: node:12.14
 pages:
   script:
     - npm install
-    - CI=true npm test
-    - CI=true npm run build --passWithNoTests
+    - CI=true npm run build
     - mv build/* $CI_PROJECT_DIR/public/
   artifacts:
     paths:
