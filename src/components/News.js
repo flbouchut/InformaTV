@@ -13,8 +13,13 @@ export default function News(props) {
             {props.news && (
                 
                 <Container>
+                  {console.log(props.news.articles[props.index + 2].urlToImage)}
+                  {console.log(props.index)}
+                  {console.log(props.news.articles)}
+
                 <Card>
                 <Background src={props.news.articles[props.index].urlToImage} alt="">
+                
 
                 </Background>
 
@@ -41,6 +46,7 @@ export default function News(props) {
                 </Card>
                 
                 </Container>
+                
                 
             )}
             

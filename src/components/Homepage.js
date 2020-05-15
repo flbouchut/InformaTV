@@ -68,7 +68,7 @@ export default function Homepage() {
             setIndexNews(indexNews + 3)
             , 25000);
 
-        if (indexNews > 17) {
+        if (indexNews > 14) {
             setIndexNews(0);
         }
         return () => {
