@@ -4,7 +4,7 @@ pages:
   script:
     - npm install
     - CI=true npm test
-    - CI=true npm run build
+    - CI=true npm run build --passWithNoTests
     - mv build/* $CI_PROJECT_DIR/public/
   artifacts:
     paths:
