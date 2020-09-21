@@ -38,10 +38,47 @@ function photos() {
         <div>
           {/* {console.log(newNotifications)} */}
           {newNotifications ?
-          <Alert>You get 3 news messages</Alert>
-          : null
+          // <Alert>You get 3 news messages</Alert>
+          <Container>
+          <Banner>You have 3 new messages</Banner>
+                <NotificationsList>
+                  <Notification>
+                    Monday 22th April - 6.22pm : New message from Sarah
+                  </Notification>
+
+                  <Notification>
+                  Monday 22th April - 6.22pm : New message from Sarah
+                  </Notification>
+
+                  <Notification>
+                    Monday 22th April - 6.22pm : New message from Kevin
+                  </Notification>
+
+                  <Notification>
+                    Monday 22th April - 6.22pm : New message from Mehdi
+                  </Notification>
+
+
+                </NotificationsList>
+                </Container>
+          : <Container>
+            <Banner>
+            <PhotodeProfil src={dataContact[selectedContact].url}/>  
+            {dataContact[selectedContact].name} 
+            </Banner>
+            
+            <MessageTab>
+                      {dataMessages[selectedContact].map((message, index) => (
+                        <Message key = {index}>
+                          {message}
+                        </Message>
+                      ))}
+                      {photos()}
+                </MessageTab>
+              
+          </Container>
           }
-            <Container>
+            {/* <Container>
                 <ContactList>
                     <Titre>Messages</Titre>
 
@@ -64,31 +101,62 @@ function photos() {
                       {photos()}
                     </ListMessage>
                 </MessageTab>
-
-
-            </Container>
+            </Container> */}
+            
         </div>
     );
 }
 
-const Alert = styled.div`
-  margin-bottom: 3%;
+const Notification = styled.div`
+    margin: 15px 10px 15px 50px;
+    font-size: 2vw;
+
+`;
+
+const NotificationsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width : 100%;
+  justify-content: center;
+
+`
+
+
+const Banner = styled.div`
+  display: flex;
+  height: 20%;
+
+  width : 100%;
+  border-bottom-style: solid;
+  border-color: grey;
+  border-width: 1px;
   text-align: center;
   font-weight: bold;
   font-size: 2vw;
-  line-height: 5vh;
-  width : 60vw;
-  background-color: #FF969B;
-  border-radius: 5%;
-`;
+  align-items: center;
+  justify-content: center;
+
+`
+
+// const Alert = styled.div`
+//   margin-bottom: 3%;
+//   text-align: center;
+//   font-weight: bold;
+//   font-size: 2vw;
+//   line-height: 5vh;
+//   width : 60vw;
+//   background-color: #FF969B;
+//   border-radius: 5%;
+// `;
 
 const Message = styled.div`
-    margin: 1px 0px;
-    /* background: #f4f4f8; */
+    margin: 10px 10px 10px 50px;
     background: #6EC8B9;
     padding: 10px 15px;
     border-radius: 20px;
-    max-width: 50%;
+    font-size: 1.5vw;
+    max-width: 80%;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 2px;
     border-top-right-radius: 20px;
@@ -100,12 +168,14 @@ const ListMessage = styled.div`
 `;
 
 const Container = styled.div`
-display: flex;
+  display: flex;
+  flex-direction: column;
   height : 63vh;
   width : 60vw;
   overflow: hidden;
   background-color: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08);
+  border-radius: 2%;
 `;
 
 const ContactList = styled.div`
@@ -122,7 +192,8 @@ const MessageTab = styled.div`
   display: flex;
   flex-direction: column;
   height : 100%;
-  width : 67%;
+  width : 100%;
+  justify-content: center;
 `;
 
 const Contact = styled.div`
@@ -136,10 +207,10 @@ const Contact = styled.div`
 `;
 
 const PhotodeProfil = styled.img`
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
-  margin: 10px;
+  margin: 0px 10px 0px 0px;
 `;
 
 const Name = styled.div`

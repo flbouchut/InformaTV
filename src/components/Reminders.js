@@ -3,43 +3,73 @@ import styled from 'styled-components'
 
 export default function Reminders(props) {
 
+    function sqldatetodisplay(date){
+        var result = new Date(date).toUTCString().substring(0,22);
+        console.log(result);
+        return result;
+    }
+
+    function datetoday(date){
+        var result = new Date(date);
+        var today = new Date();
+        var nbJours = result.getUTCDate() - today.getUTCDate();
+        return nbJours;
+    }
+
     return (
         <div>
+            {props.reminders && (
             <ListReminders>
-            <Reminder>
+            {props.reminders.map((content, index) => (
+                <Reminder>
                 <Header>
-                    <Date>Wednesday May 06 - 10am</Date>
+                    <DateStyled>{sqldatetodisplay(props.reminders[index].datetime)}</DateStyled>
+                    <Category>{props.reminders[index].category}</Category>
+                    <Left>{datetoday(props.reminders[index].datetime)} day left</Left>
+                </Header>
+                <Texte>{props.reminders[index].content}</Texte>
+            </Reminder>
+            ))}
+
+
+            {/* <Reminder>
+                <Header>
+                    <DateStyled>{sqldatetodisplay(props.reminders[0].datetime)}</DateStyled>
+                    <Category>{props.reminders[0].category}</Category>
                     <Left>1 day left</Left>
                 </Header>
-                <Texte>Dental Appointment</Texte>
+                <Texte>{props.reminders[0].content}</Texte>
             </Reminder>
             <Reminder>
                 <Header>
-                    <Date>Thurdsay May 07 - 10am</Date>
+                    <DateStyled>{sqldatetodisplay(props.reminders[1].datetime)}</DateStyled>
                     <Left>2 days left</Left>
                 </Header>
-                <Texte>Something to do</Texte>
+                <Texte>{props.reminders[1].content}</Texte>
             </Reminder>
             <Reminder>
                 <Header>
-                    <Date>Thursday May 07 - 10am</Date>
+                    <DateStyled>{sqldatetodisplay(props.reminders[2].datetime)}</DateStyled>
+                    <Category>{props.reminders[2].category}</Category>
                     <Left>2 days left</Left>
                 </Header>
-                <Texte>Something to do</Texte>
+                <Texte>{props.reminders[2].content}</Texte>
             </Reminder>
             <Reminder>
                 <Header>
-                    <Date>Thursday May 07 - 10am</Date>
+                    <DateStyled>{sqldatetodisplay(props.reminders[3].datetime)}</DateStyled>
+                    <Category>{props.reminders[3].category}</Category>
                     <Left>2 days left</Left>
                 </Header>
                 <Texte>
-                    Something to do
+                {props.reminders[3].content}
                 </Texte>
-            </Reminder>
+            </Reminder> */}
 
 
 
             </ListReminders>
+            )}
         </div>
     );
 }
@@ -63,16 +93,15 @@ const Reminder = styled.div`
     border-radius: 3px;
 `
 const Texte = styled.div`
-  font-weight: bold;
+  padding:0 0 0 10px;
   font-size: 1.5vw;
   border-top-style: solid;
   border-width:1px;
   border-color: grey;
-  width:100%;
-  text-align: center;
+  
 `;
 
-const Date = styled.div`
+const DateStyled = styled.div`
   float: left;
   padding:0 0 0 10px;
 `;
@@ -82,6 +111,13 @@ const Left = styled.div`
   padding:0 10px 0 0;
   font-style: italic;
 `;
+
+const Category = styled.div`
+  float: left;
+  font-weight: bold;
+  margin: 0 0 0 75px;
+`;
+
 const Header = styled.div`
 `;
 

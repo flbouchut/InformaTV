@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
+import axios from 'axios';
 
 import ListCategories from './ListCategories'
 import Photos from './Photos';
@@ -8,7 +9,6 @@ import Messages from './Messages';
 import News from './News';
 import Weather from './Weather';
 import ScrollingText from './ScrollingText'
-// import IFrameComponent from './IframeComponent';
 
 export default function Homepage() {
     const [index, setIndex] = useState(0);
@@ -22,6 +22,7 @@ export default function Homepage() {
     //7b996dfcc08c6eb32d0b8fa2ee15669a pas la mienne
 
     const [news, setNews] = useState();
+    const [reminders, setReminders] = useState();
 
     useEffect(() => {
         async function fetchData() {
@@ -48,6 +49,17 @@ export default function Homepage() {
 
         fetchData();
         console.log("appel a l'api");
+    }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost:3004/reminders')
+                .then((res) => {
+                    console.log(res.data)
+                    setReminders(res.data)
+                }).catch((error) => {
+                    console.log(error)
+                });
+        console.log("appel a l'api pour les reminders");
     }, []);
 
 
@@ -93,13 +105,12 @@ export default function Homepage() {
         switch (index) {
             case 0:
                 return <News news={news}  index={indexNews}/>;
-                // return <IFrameComponent></IFrameComponent>
             case 1:
                 return <Weather forecast={forecast}/>;
             case 2:
                 return <Messages />;
             case 3:
-                return <Reminders />;
+                return <Reminders reminders={reminders}/>;
             case 4:
                 return <Photos />;
             default:
